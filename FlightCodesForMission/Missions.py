@@ -108,8 +108,6 @@ class missions():
 
     def Flight(self):
         target_detected = False
-        xa=0
-        
         while True:
             next_wp = self.aurornis.mission.next
             servonum = 7 # ilk servo için pixhawk girişi
@@ -158,17 +156,11 @@ class missions():
                 cap.release()
                 cv2.destroyAllWindows()
 
-            #if (target_detected==True and xa==0): # hedef tespit edilirse bir kerelik olmak üzere (xa) bu döngüye girer
             if (target_detected==True):
-                #cap.release()
-                #cv2.destroyAllWindows() # hedef tespit edildiği için videolar kapanır
                 self.total = self.total+1
                 target_ned=self.get_target_ned(cx,cy) # hedef ned koordinatları hesaplanır
                 self.get_airdrop_wp_with_euler(target_ned)  # düşüş mesafeleri hesaplanarak atış konumu bulunur ve missiona eklenir
-                xa=1 # tekrar girmemesi için xa 1 yapılır
-
                 target_detected==False
-                #break
 
             if (cv2.waitKey(15) & 0xFF == ord('q')) :
                 break
